@@ -1,0 +1,107 @@
+﻿@model MapleStoryFinal.Models.ViewModel.MonsterSearchViewModel
+
+<h2>怪物搜尋頁面</h2>
+<h3>@ViewData["Message"]</h3>
+<button type="button" onclick="buttonClick()" class="btn btn-primary">創建怪物</button>
+@*搜尋欄位*@
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Search">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                @*asp-for 用來在頁面指定表單的 input 要跟 Model 的哪個屬性綁定*@
+                @*<label asp-for="SearchParams.minPrice" class="control-label"></label>   *@            @*文字欄位*@
+                <label class="control-label">最小等級</label>
+                <input asp-for="SearchParms.minlevel" class="form-control" />                      @*輸入欄位*@
+                <span asp-validation-for="SearchParms.minlevel" class="text-danger" value=""></span>       @*驗證欄位*@
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">最大等級</label>
+                <input asp-for="SearchParms.maxlevel" class="form-control" />
+                <span asp-validation-for="SearchParms.maxlevel" class="text-danger" value=""></span>
+            </div>
+
+            <div class="form-group">
+                @*<label asp-for="SearchParms.minHp" class="control-label"></label>*@
+                <label class="control-label">最小生命值</label>
+                <input asp-for="SearchParms.minHp" class="form-control" />
+                <span asp-validation-for="SearchParms.minHp" class="text-danger" value=""></span>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">最大生命值</label>
+                <input asp-for="SearchParms.maxHp" class="form-control" />
+                <span asp-validation-for="SearchParms.maxHp" class="text-danger" value=""></span>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">地區</label>
+                <input asp-for="SearchParms.area" class="form-control" />
+                <span asp-validation-for="SearchParms.area" class="text-danger" value=""></span>
+            </div>
+          
+            <div class="form-group">
+                <input type="submit" value="搜尋送出" class="btn btn-primary" />
+                <button type="button" onclick="buttonClick()" class="btn btn-primary">回到訂單頁面</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@*顯示搜尋資料*@
+<table class="table">
+
+    <thead>
+        <tr>
+            <th>
+                怪物名字
+            </th>
+            <th>
+                怪物等級
+            </th>
+            <th>
+                怪物血量
+            </th>
+            <th>
+                怪物攻擊
+            </th>
+            <th>
+                怪物地區
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Monsters) @*Monsters搜尋類別的屬性*@
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Mlevel)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Hp)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Atk)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Area)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@section Scripts{
+<script>
+    function buttonClick(){
+        var url = window.location.href + "TblMonsters/Create"
+        window.location.href = url
+    }
+
+</script>
+}
